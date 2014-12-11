@@ -1,0 +1,13 @@
+<resources>
+	<string name="app_name">Date-In</string>
+
+	<!-- Login / Register -->
+	<string name="txt_title_login">LOGIN</string>
+	<string name="txt_title_register">REGISTER</string>
+	<string name="txt_username">Username</string>
+	<string name="txt_email">Email Address</string>
+	<string name="txt_password">Password</string>
+	<string name="txt_password_confirm">Confirm Password</string>
+	<string name="txt_register_here"><u>Don\'t have an account? Register here!</u></string>
+	<string name="txt_login_here"><u>Already have an account? Login here!</u></string>
+</resources>
