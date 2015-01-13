@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+	<LinearLayout
+		android:id="@+id/login_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/actionBarHeight"
+			android:background="?attr/colorPrimary">
+
+			<TextView
+				android:id="@+id/actionBar_login"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentStart="true"
+				android:layout_marginStart="20dp"
+				android:gravity="center"
+				android:text="@string/txt_title_login"
+				android:textColor="@android:color/white"
+				android:textSize="20sp"/>
+
+			<ImageView
+				android:id="@+id/loginClick"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentEnd="true"
+				android:paddingEnd="20dp"
+				android:paddingStart="20dp"
+				android:src="@drawable/ic_action_accept"/>
+
+		</RelativeLayout>
+
+		<ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:fillViewport="true">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/login_email"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="10dp"
+					android:hint="@string/txt_email"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/login_password"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:hint="@string/txt_password"
+					android:inputType="textPassword"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+
+					<TextView
+						android:id="@+id/login_register"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_alignParentBottom="true"
+						android:gravity="center|bottom"
+						android:paddingBottom="20dp"
+						android:paddingTop="10dp"
+						android:text="@string/txt_register_here"
+						android:textColor="?attr/colorPrimary"/>
+
+				</RelativeLayout>
+
+			</LinearLayout>
+
+		</ScrollView>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/register_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:visibility="gone">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/actionBarHeight"
+			android:background="?attr/colorPrimary">
+
+			<TextView
+				android:id="@+id/actionBar_register"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentStart="true"
+				android:layout_marginStart="20dp"
+				android:gravity="center"
+				android:text="@string/txt_title_register"
+				android:textColor="@android:color/white"
+				android:textSize="20sp"/>
+
+			<ImageView
+				android:id="@+id/registerClick"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentEnd="true"
+				android:paddingEnd="20dp"
+				android:paddingStart="20dp"
+				android:src="@drawable/ic_action_accept"/>
+
+			<com.datein.date_in.views.material_progress_bar_circular.ProgressBarCircularIndetermininate
+				android:id="@+id/registerProgressBar"
+				android:layout_width="32dp"
+				android:layout_height="32dp"
+				android:layout_marginEnd="20dp"
+				android:layout_centerVertical="true"
+				android:layout_alignParentEnd="true"
+				android:background="@android:color/white"
+				android:visibility="gone"/>
+
+		</RelativeLayout>
+
+		<ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:fillViewport="true">
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/register_email"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="10dp"
+					android:inputType="textEmailAddress"
+					android:hint="@string/txt_email"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/register_display_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:hint="@string/txt_display_name"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/register_password"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:hint="@string/txt_password"
+					android:inputType="textPassword"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<com.datein.date_in.views.material_edit_text.MaterialEditText
+					android:id="@+id/register_confirm_password"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="10dp"
+					android:layout_marginStart="10dp"
+					android:hint="@string/txt_password_confirm"
+					android:inputType="textPassword"
+					android:paddingEnd="10dp"
+					android:paddingStart="10dp"
+					android:textSize="15sp"
+					app:baseColor="@color/basicColor"
+					app:floatingLabel="highlight"
+					app:primaryColor="?attr/colorPrimary"
+					app:singleLineEllipsis="true"/>
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+
+					<TextView
+						android:id="@+id/register_login"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_alignParentBottom="true"
+						android:gravity="center|bottom"
+						android:paddingBottom="20dp"
+						android:paddingTop="10dp"
+						android:text="@string/txt_login_here"
+						android:textColor="?attr/colorPrimary"/>
+
+				</RelativeLayout>
+
+			</LinearLayout>
+
+
+		</ScrollView>
+
+	</LinearLayout>
+
+</FrameLayout>

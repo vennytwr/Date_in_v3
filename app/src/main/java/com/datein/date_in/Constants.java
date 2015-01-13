@@ -1,43 +1,34 @@
-//package com.datein.date_in;
-//
-//public interface Constants {
-//
-//	String PROJECT_ID = "994318371798";
-//
-//	// For show login
-//	String KEY_STATE = "keyState";
-//	String KEY_USERNAME = "keyUsername";
-//	String KEY_PASSWORD = "keyPassword";
-//	String KEY_EMAIL = "keyEmail";
-//	String KEY_EVENT_TYPE = "keyEventbusType";
-//	String KEY_REG_ID = "keyRegId";
-//	String KEY_MSG_ID = "keyMsgId";
-//	String KEY_MESSAGE_TXT = "keyMessageTxt";
-//
-//	String ACTION = "action";
-//
-//	// very simply notification handling :-)
-//	int NOTIFICATION_NR = 10;
-//
-//	long GCM_DEFAULT_TTL = 2 * 24 * 60 * 60 * 1000; // two days
-//
-//
-//	String PACKAGE = "com.datein.date_in.gcm";
-//	// actions for server interaction
-//	String ACTION_REGISTER = PACKAGE + ".REGISTER";
-//	String ACTION_UNREGISTER = PACKAGE + ".UNREGISTER";
-//	String ACTION_ECHO = PACKAGE + ".ECHO";
-//
-//	// action for notification intent
-//	String NOTIFICATION_ACTION = PACKAGE + ".NOTIFICATION";
-//
-//	String DEFAULT_USER = "fakeUser";
-//
-//	enum EventbusMessageType {
-//		REGISTRATION_FAILED, REGISTRATION_SUCCEEDED, UNREGISTRATION_SUCCEEDED, UNREGISTRATION_FAILED;
-//	}
-//
-//	enum State {
-//		REGISTERED, UNREGISTERED;
-//	}
-//}
+package com.datein.date_in;
+
+public interface Constants {
+
+	String SENDER_ID = "994318371798";
+	int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	long GCM_DEFAULT_TTL = 2 * 24 * 60 * 60; // two days
+
+	String KEY_REG_ID = "KEY_REG_ID";
+	String KEY_MSG_ID = "KEY_MSG_ID";
+	String KEY_APP_VERSION = "KEY_APP_VERSION";
+
+	int STATE_START = 0;
+	int STATE_LOGIN = 1;
+	int STATE_REGISTER = 2;
+	int STATE_REGISTERING = 3;
+	int STATE_REGISTER_OK = 4;
+	int STATE_EMAIL_TAKEN = 5;
+	int STATE_DISPLAY_NAME_TAKEN = 6;
+
+	// Send.
+	String PACKAGE = "com.datein.date_in.gcm";
+	String ACTION_REGISTER = PACKAGE + ".REGISTER";
+	String ACTION_UNREGISTER = PACKAGE + ".UNREGISTER";
+	String ACTION_LOGIN = PACKAGE + ".LOGIN";
+	String ACTION_ECHO = PACKAGE + ".ECHO";
+	String NOTIFICATION_ACTION = PACKAGE + ".NOTIFICATION";
+
+	// Receive.
+	String ACTION_LOGIN_OK = PACKAGE + ".LOGIN_OK";
+	String ACTION_REGISTER_OK = PACKAGE + ".REGISTER_OK";
+	String ACTION_REGISTER_EMAIL_TAKEN = PACKAGE + ".REGISTER_USERNAME_TAKEN";
+	String ACTION_REGISTER_DISPLAY_NAME_TAKEN = PACKAGE + ".REGISTER_DISPLAY_NAME_TAKEN";
+}

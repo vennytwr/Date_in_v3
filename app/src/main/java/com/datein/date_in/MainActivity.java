@@ -1,26 +1,21 @@
 package com.datein.date_in;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.datein.date_in.fragment.LoginFragment;
-import com.datein.date_in.gcm.GcmIntentService;
+import com.datein.date_in.fragment.LoginRegisterFragment;
 import com.datein.date_in.log.Logger;
-import com.datein.date_in.login.LoginController;
+import com.datein.date_in.login.LoginRegisterController;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -31,21 +26,7 @@ public class MainActivity extends FragmentActivity {
 
 	private static final String TAG = "MainActivity";
 
-	private static final String SENDER_ID = "994318371798";
-	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-	private static final long GCM_DEFAULT_TTL = 2 * 24 * 60 * 60; // two days
-
-	private static final String PACKAGE = "com.datein.date_in.gcm";
-	private static final String ACTION_REGISTER = PACKAGE + ".REGISTER";
-	private static final String ACTION_UNREGISTER = PACKAGE + ".UNREGISTER";
-	private static final String ACTION_ECHO = PACKAGE + ".ECHO";
-
-	private static final String KEY_REG_ID = "KEY_REG_ID";
-	private static final String KEY_MSG_ID = "KEY_MSG_ID";
-	private static final String KEY_APP_VERSION = "KEY_APP_VERSION";
-
-	private LoginController loginController;
-
+	private LoginRegisterController loginRegisterController;
 	private String regId;
 	private int appVersion;
 	private GoogleCloudMessaging gcm;
@@ -66,7 +47,7 @@ public class MainActivity extends FragmentActivity {
 			Logger.d(TAG, "No valid Google Play Services APK found.");
 		}
 
-		loginController = new LoginController(this);
+		loginRegisterController = new LoginRegisterController(this);
 
 		setContentView(R.layout.activity_main);
 
@@ -86,8 +67,8 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (loginController.getCurrentState() == LoginController.STATE_REGISTER) {
-			loginController.showLogin();
+		if (loginRegisterController.getCurrentState() == Constants.STATE_REGISTER) {
+			loginRegisterController.doChangeState(Constants.STATE_LOGIN);
 			return;
 		}
 
@@ -105,21 +86,20 @@ public class MainActivity extends FragmentActivity {
 				.show();
 	}
 
-	public LoginController getLoginController() {
-		return loginController;
+	public LoginRegisterController getLoginRegisterController() {
+		return loginRegisterController;
 	}
 
 	public GoogleCloudMessaging getGcm() {
 		return gcm;
 	}
 
-
 	public void doInitApp(boolean firstAttempt) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		if (firstAttempt) {
-			transaction.add(R.id.fragmentContainer, new LoginFragment(), "loginFragment");
+			transaction.add(R.id.fragmentContainer, new LoginRegisterFragment(), "loginRegisterFragment");
 		} else {
-			transaction.replace(R.id.fragmentContainer, new LoginFragment(), "loginFragment");
+			transaction.replace(R.id.fragmentContainer, new LoginRegisterFragment(), "loginRegisterFragment");
 		}
 		transaction.commit();
 	}
@@ -134,7 +114,7 @@ public class MainActivity extends FragmentActivity {
 		if (resultCode != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
 				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-						PLAY_SERVICES_RESOLUTION_REQUEST).show();
+						Constants.PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				Logger.d(TAG, "This device is not supported.");
 				finish();
@@ -154,11 +134,11 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
-					regId = gcm.register(SENDER_ID);
+					regId = gcm.register(Constants.SENDER_ID);
 					Logger.d(TAG, "Device registered. Registration ID: " + regId);
 
 					// Send the registration ID to server.
-					sendRegistrationIdToBackend();
+					//sendRegistrationIdToBackend();
 
 					// Save the registration ID to the application.
 					storeRegistrationId();
@@ -177,10 +157,10 @@ public class MainActivity extends FragmentActivity {
 	private void sendRegistrationIdToBackend() {
 		try {
 			Bundle data = new Bundle();
-			data.putString("register_id", regId);
-			data.putString("action", ACTION_REGISTER);
+			data.putString("registrationId", regId);
+			data.putString("action", Constants.ACTION_REGISTER);
 			String msgId = Integer.toString(getNextMsgId());
-			gcm.send(SENDER_ID + "@gcm.googleapis.com", msgId, GCM_DEFAULT_TTL, data);
+			gcm.send(Constants.SENDER_ID + "@gcm.googleapis.com", msgId, Constants.GCM_DEFAULT_TTL, data);
 			Logger.d(TAG, "Registration ID sent.");
 		} catch (IOException e) {
 			Logger.d(TAG, "IOException while sending registration to backend... " + e);
@@ -193,11 +173,11 @@ public class MainActivity extends FragmentActivity {
 	 *
 	 * @return message ID.
 	 */
-	private int getNextMsgId() {
+	public int getNextMsgId() {
 		SharedPreferences prefs = getPrefs();
-		int id = prefs.getInt(KEY_MSG_ID, 0);
+		int id = prefs.getInt(Constants.KEY_MSG_ID, 0);
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.putInt(KEY_MSG_ID, ++id);
+		editor.putInt(Constants.KEY_MSG_ID, ++id);
 		editor.apply();
 		return id;
 	}
@@ -209,8 +189,8 @@ public class MainActivity extends FragmentActivity {
 		final SharedPreferences prefs = getPrefs();
 		Logger.d(TAG, "Saving registration ID to prefs..");
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(KEY_REG_ID, regId);
-		editor.putInt(KEY_APP_VERSION, appVersion);
+		editor.putString(Constants.KEY_REG_ID, regId);
+		editor.putInt(Constants.KEY_APP_VERSION, appVersion);
 		editor.apply();
 	}
 
@@ -221,15 +201,15 @@ public class MainActivity extends FragmentActivity {
 	 * @return registration ID, or empty string if there is no existing
 	 * registration ID.
 	 */
-	private String getRegistrationId() {
+	public String getRegistrationId() {
 		final SharedPreferences prefs = getPrefs();
-		String registrationId = prefs.getString(KEY_REG_ID, "");
+		String registrationId = prefs.getString(Constants.KEY_REG_ID, "");
 		if (registrationId.isEmpty()) {
 			Logger.d(TAG, "Registration not found.");
 			// Check if app was updated; if so, it must clear the registration ID
 			// since the existing regID is not guaranteed to work with the new
 			// app version.
-			appVersion = prefs.getInt(KEY_APP_VERSION, 1);
+			appVersion = prefs.getInt(Constants.KEY_APP_VERSION, 1);
 			int currentVersion = getAppVersion();
 			if (appVersion != currentVersion) {
 				Log.i(TAG, "App version changed.");
