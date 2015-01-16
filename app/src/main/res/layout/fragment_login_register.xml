@@ -35,6 +35,16 @@
 				android:paddingStart="20dp"
 				android:src="@drawable/ic_action_accept"/>
 
+			<com.datein.date_in.views.material_progress_bar_circular.ProgressBarCircularIndetermininate
+				android:id="@+id/loginProgressBar"
+				android:layout_width="32dp"
+				android:layout_height="32dp"
+				android:layout_marginEnd="20dp"
+				android:layout_centerVertical="true"
+				android:layout_alignParentEnd="true"
+				android:background="@android:color/white"
+				android:visibility="gone"/>
+
 		</RelativeLayout>
 
 		<ScrollView
@@ -59,6 +69,7 @@
 					android:paddingEnd="10dp"
 					android:paddingStart="10dp"
 					android:textSize="15sp"
+					android:inputType="textEmailAddress"
 					app:baseColor="@color/basicColor"
 					app:floatingLabel="highlight"
 					app:primaryColor="?attr/colorPrimary"

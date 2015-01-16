@@ -3,6 +3,11 @@
 
 	<dimen name="actionBarHeight">55dp</dimen>
 
+	// Material Tab
+	<dimen name="materialTextTab">14sp</dimen>
+	<dimen name="tabSelectorHeight">4dp</dimen>
+	<dimen name="tabHostHeight">48dp</dimen>
+
 	// Material Edit Text
 	<dimen name="default_padding_top">0dp</dimen>
 	<dimen name="default_padding_bottom">0dp</dimen>

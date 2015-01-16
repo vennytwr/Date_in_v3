@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.datein.date_in.Constants;
-import com.datein.date_in.MainActivity;
+import com.datein.date_in.DateInActivity;
 import com.datein.date_in.R;
-import com.datein.date_in.login.LoginRegisterController;
+import com.datein.date_in.controller.FriendsController;
+import com.datein.date_in.controller.LoginRegisterController;
+import com.datein.date_in.controller.MainController;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
@@ -42,6 +44,13 @@ public class GcmIntentService extends IntentService {
 			else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 				String action = intent.getStringExtra("action");
 				switch (action) {
+					case Constants.ACTION_LOGIN_OK:
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_LOGIN_OK);
+						break;
+					case Constants.ACTION_LOGIN_FAIL:
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_LOGIN_FAIL);
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_LOGIN);
+						break;
 					case Constants.ACTION_REGISTER_OK:
 						LoginRegisterController.getInstance().doChangeState(Constants.STATE_REGISTER_OK);
 						LoginRegisterController.getInstance().doChangeState(Constants.STATE_REGISTER);
@@ -49,7 +58,19 @@ public class GcmIntentService extends IntentService {
 						break;
 					case Constants.ACTION_REGISTER_EMAIL_TAKEN:
 						LoginRegisterController.getInstance().doChangeState(Constants.STATE_EMAIL_TAKEN);
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_REGISTER);
 						break;
+					case Constants.ACTION_REGISTER_DISPLAY_NAME_TAKEN:
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_DISPLAY_NAME_TAKEN);
+						LoginRegisterController.getInstance().doChangeState(Constants.STATE_REGISTER);
+						break;
+					case Constants.ACTION_SEARCH_OK:
+						FriendsController.getInstance().onSearchOK(extras);
+						break;
+					case Constants.ACTION_SEARCH_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_SEARCH_FAIL, null);
+						break;
+
 				}
 			}
 		}
@@ -63,7 +84,7 @@ public class GcmIntentService extends IntentService {
 		NotificationManager mNotificationManager = (NotificationManager) this
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
-		Intent notificationIntent = new Intent(this, MainActivity.class);
+		Intent notificationIntent = new Intent(this, DateInActivity.class);
 		notificationIntent.setAction(ACTION_NOTIFICATION);
 		notificationIntent.putExtra(KEY_MESSAGE_TXT, msg);
 		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

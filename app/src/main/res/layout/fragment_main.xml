@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:MaterialTabHost="http://schemas.android.com/apk/res-auto"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".DateInActivity">
+
+	<LinearLayout
+		android:id="@+id/customActionBar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/tabHostHeight"
+		android:background="?attr/colorPrimary"
+		android:orientation="horizontal">
+
+		<ImageView
+			android:id="@+id/drawer_indicator"
+			android:layout_width="@dimen/tabHostHeight"
+			android:layout_height="@dimen/tabHostHeight"
+			android:layout_gravity="start"
+			android:scaleType="centerInside"/>
+
+		<com.datein.date_in.views.material_tab.MaterialTabHost
+			android:id="@+id/tabHost"
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			MaterialTabHost:hasIcons="false"/>
+
+	</LinearLayout>
+
+	<!-- Content -->
+	<android.support.v4.widget.DrawerLayout
+		android:id="@+id/drawer_layout"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+
+		<com.datein.date_in.views.material_tab.NoSwipeViewPager
+			android:id="@+id/pager"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+
+
+		<RelativeLayout
+			android:id="@+id/drawer_content"
+			android:layout_width="240dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			android:background="@android:color/white"
+			android:clickable="true">
+
+
+		</RelativeLayout>
+
+	</android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

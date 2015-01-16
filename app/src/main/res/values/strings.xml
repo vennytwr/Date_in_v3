@@ -10,4 +10,19 @@
 	<string name="txt_password_confirm">Confirm Password</string>
 	<string name="txt_register_here"><u>Don\'t have an account? Register here!</u></string>
 	<string name="txt_login_here"><u>Already have an account? Login here!</u></string>
+
+	// Calendar
+	<string name="title_section1">Calendar</string>
+
+	// Friends
+	<string name="title_section2">Friends</string>
+	<string name="txt_search">Search for friends</string>
+	<string name="txt_friendSearchResultHeader">Search Result</string>
+	<string name="txt_display_name_row">Display Name : </string>
+	<string name="txt_friendRequestsHeader">Friend Requests</string>
+	<string name="txt_friendsHeader">Friends</string>
+	<string name="txt_noFriends">No Friends. :( Search for your friends by entering their email address or display name.</string>
+
+	// Events
+	<string name="title_section3">Events</string>
 </resources>

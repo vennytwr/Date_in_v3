@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".DateInActivity">
+
+	<com.datein.date_in.views.material_edit_text.MaterialEditText
+		android:id="@+id/friendSearch"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="10dp"
+		android:imeOptions="actionSearch"
+		android:layout_marginStart="10dp"
+		android:layout_marginTop="3dp"
+		android:drawablePadding="3dp"
+		android:drawableStart="@drawable/ic_action_search"
+		android:gravity="center|start"
+		android:hint="@string/txt_search"
+		android:inputType="textPersonName"
+		android:textSize="15sp"
+		app:baseColor="@color/basicColor"
+		app:floatingLabel="none"
+		app:primaryColor="?attr/colorPrimary"
+		app:singleLineEllipsis="true"/>
+
+	<ScrollView
+		android:visibility="visible"
+		android:id="@+id/friendListContainer"
+		android:fillViewport="true"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:visibility="gone"
+				android:id="@+id/friendSearchResultContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:visibility="gone"
+				android:id="@+id/friendRequestsContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					android:id="@+id/friendRequests"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="25dp"
+					android:layout_marginEnd="25dp"
+					android:textSize="18sp"
+					android:text="@string/txt_friendRequestsHeader"/>
+
+				<View
+					android:layout_marginStart="15dp"
+					android:layout_marginEnd="15dp"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@android:color/darker_gray"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:visibility="gone"
+				android:id="@+id/friendsContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					android:id="@+id/friends"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="25dp"
+					android:layout_marginEnd="25dp"
+					android:textSize="18sp"
+					android:text="@string/txt_friendsHeader"/>
+
+				<View
+					android:layout_marginStart="15dp"
+					android:layout_marginEnd="15dp"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@android:color/darker_gray"/>
+
+			</LinearLayout>
+
+			<RelativeLayout
+				android:id="@+id/noFriendsContainer"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+				<TextView
+					android:id="@+id/txt_noFriend"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerInParent="true"
+					android:layout_gravity="center"
+					android:layout_marginEnd="20dp"
+					android:layout_marginStart="20dp"
+					android:gravity="center"
+					android:text="@string/txt_noFriends"/>
+
+			</RelativeLayout>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>
