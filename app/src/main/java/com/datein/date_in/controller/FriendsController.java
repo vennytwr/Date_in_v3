@@ -12,6 +12,7 @@ import com.datein.date_in.DateInActivity;
 import com.datein.date_in.log.Logger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FriendsController {
 
@@ -23,6 +24,11 @@ public class FriendsController {
 	private DateInActivity activity;
 	private FriendsStateChangeListener listener;
 	private String currentState;
+	private String searchResult;
+	private ArrayList<String> friendList;
+	private ArrayList<String> requestList;
+	private ArrayList<String> pendingList;
+	private ArrayList<String> ignoreList;
 
 	public FriendsController(DateInActivity activity) {
 		this.activity = activity;
@@ -57,8 +63,66 @@ public class FriendsController {
 	}
 
 	public void onSearchOK(Bundle data) {
-		String displayName = data.getString("displayName");
-		doChangeState(Constants.STATE_FRIENDS_SEARCH_OK, displayName);
+		searchResult = data.getString("displayName");
+		doChangeState(Constants.STATE_FRIENDS_SEARCH_OK, searchResult);
+	}
+
+	public void onAddFriend() {
+		doChangeState(Constants.STATE_FRIENDS_ADDING, null);
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected  Void doInBackground(Void... params) {
+				try {
+					Bundle data = new Bundle();
+					String regId = activity.getRegistrationId();
+					data.putString(Constants.REGISTRATION_ID, regId);
+					data.putString(Constants.ACTION, Constants.ACTION_ADD_FRIEND);
+					data.putString("requestTo", searchResult);
+					String msgId = Integer.toString(activity.getNextMsgId());
+					activity.getGcm().send(
+							Constants.SENDER_ID + "@gcm.googleapis.com", msgId, Constants.GCM_DEFAULT_TTL, data);
+				} catch (IOException e) {
+					Logger.d(TAG, "IOException: " + e);
+				}
+				return null;
+			}
+		}.execute();
+	}
+
+	public void onFriendList() {
+		doChangeState(Constants.STATE_FRIENDS_LIST_REQUESTING, null);
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected  Void doInBackground(Void... params) {
+				try {
+					Bundle data = new Bundle();
+					String regId = activity.getRegistrationId();
+					data.putString(Constants.REGISTRATION_ID, regId);
+					data.putString(Constants.ACTION, Constants.ACTION_FRIEND);
+					String msgId = Integer.toString(activity.getNextMsgId());
+					activity.getGcm().send(
+							Constants.SENDER_ID + "@gcm.googleapis.com", msgId, Constants.GCM_DEFAULT_TTL, data);
+				} catch (IOException e) {
+					Logger.d(TAG, "IOException: " + e);
+				}
+				return null;
+			}
+		}.execute();
+	}
+
+	public void onFriendListOK(Bundle data) {
+		// Here is where i stop.. will continue at midnight when i come back.
+		// I will try to finish up this get friend list part.
+		// This is just testing to see if i can receive from the server the things i wanted.
+		int friendListIndex = Integer.valueOf(data.getString("friendListIndex"));
+		int requestListIndex = Integer.valueOf(data.getString("requestListIndex"));
+		int pendingListIndex = Integer.valueOf(data.getString("pendingListIndex"));
+		int ignoreListIndex = Integer.valueOf(data.getString("ignoreListIndex"));
+		Logger.d(TAG, "F: " + friendListIndex);
+		Logger.d(TAG, "R: " + requestListIndex);
+		Logger.d(TAG, "P: " + pendingListIndex);
+		Logger.d(TAG, "I: " + ignoreListIndex);
+
 	}
 
 	public void setCurrentState(String state) {

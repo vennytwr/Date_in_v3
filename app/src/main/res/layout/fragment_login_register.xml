@@ -35,7 +35,7 @@
 				android:paddingStart="20dp"
 				android:src="@drawable/ic_action_accept"/>
 
-			<com.datein.date_in.views.material_progress_bar_circular.ProgressBarCircularIndetermininate
+			<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
 				android:id="@+id/loginProgressBar"
 				android:layout_width="32dp"
 				android:layout_height="32dp"
@@ -146,7 +146,7 @@
 				android:paddingStart="20dp"
 				android:src="@drawable/ic_action_accept"/>
 
-			<com.datein.date_in.views.material_progress_bar_circular.ProgressBarCircularIndetermininate
+			<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
 				android:id="@+id/registerProgressBar"
 				android:layout_width="32dp"
 				android:layout_height="32dp"

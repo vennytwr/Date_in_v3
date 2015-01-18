@@ -70,6 +70,16 @@ public class GcmIntentService extends IntentService {
 					case Constants.ACTION_SEARCH_FAIL:
 						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_SEARCH_FAIL, null);
 						break;
+					case Constants.ACTION_ADD_OK:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_OK, null);
+						break;
+					case Constants.ACTION_ADD_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_FAIL, null);
+						break;
+					case Constants.ACTION_LIST_OK:
+						FriendsController.getInstance().onFriendListOK(extras);
+						break;
+
 
 				}
 			}

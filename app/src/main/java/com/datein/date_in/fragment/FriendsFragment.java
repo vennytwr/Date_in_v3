@@ -19,6 +19,9 @@ import com.datein.date_in.R;
 import com.datein.date_in.controller.FriendsStateChangeListener;
 import com.datein.date_in.log.Logger;
 import com.datein.date_in.views.material_edit_text.MaterialEditText;
+import com.gc.materialdesign.views.ButtonFloatSmall;
+import com.gc.materialdesign.views.ButtonIcon;
+import com.gc.materialdesign.views.ButtonRectangle;
 
 public class FriendsFragment extends Fragment implements FriendsStateChangeListener {
 
@@ -28,12 +31,13 @@ public class FriendsFragment extends Fragment implements FriendsStateChangeListe
 	private Typeface font;
 
 	// All the container.
-	private LinearLayout friendSearchContainer;
-	private LinearLayout friendRequestsContainer;
+	private LinearLayout searchResultContainer;
 	private LinearLayout friendsContainer;
-	private RelativeLayout noFriendsContainer;
+	private RelativeLayout emptyContainer;
 
+	// Search.
 	private MaterialEditText friendSearch;
+	private ButtonFloatSmall rowAdd;
 
 	public static FriendsFragment newInstance() {
 		return new FriendsFragment();
@@ -49,20 +53,14 @@ public class FriendsFragment extends Fragment implements FriendsStateChangeListe
 		font = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
 
 		// Get all the container.
-		friendSearchContainer = (LinearLayout) resView.findViewById(R.id.friendSearchResultContainer);
-		friendRequestsContainer = (LinearLayout) resView.findViewById(R.id.friendRequestsContainer);
+		searchResultContainer = (LinearLayout) resView.findViewById(R.id.searchResultContainer);
+		searchResultContainer.setVisibility(View.GONE);
 		friendsContainer = (LinearLayout) resView.findViewById(R.id.friendsContainer);
-		noFriendsContainer = (RelativeLayout) resView.findViewById(R.id.noFriendsContainer);
+		emptyContainer = (RelativeLayout) resView.findViewById(R.id.emptyContainer);
 
+		// Set up the search input.
 		friendSearch = (MaterialEditText) resView.findViewById(R.id.friendSearch);
 		friendSearch.setTypeface(font);
-		TextView noFriend = (TextView) resView.findViewById(R.id.txt_noFriend);
-		noFriend.setTypeface(font);
-		TextView friendRequests = (TextView) resView.findViewById(R.id.friendRequests);
-		friendRequests.setTypeface(font);
-		TextView friends = (TextView) resView.findViewById(R.id.friends);
-		friends.setTypeface(font);
-
 		friendSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -73,6 +71,25 @@ public class FriendsFragment extends Fragment implements FriendsStateChangeListe
 				return false;
 			}
 		});
+
+		// Set up the search dismiss button.
+		final ButtonIcon searchResultContainerClose = (ButtonIcon) resView.findViewById(R.id.searchResultContainerClose);
+		searchResultContainerClose.setActivated(false);
+		searchResultContainerClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(searchResultContainer.getVisibility() == View.VISIBLE)
+					searchResultContainer.setVisibility(View.GONE);
+			}
+		});
+
+		// Set texts font.
+		TextView emptyFriendHeader = (TextView) resView.findViewById(R.id.emptyFriendHeader);
+		emptyFriendHeader.setTypeface(font);
+		TextView searchResultHeader = (TextView) resView.findViewById(R.id.searchResultHeader);
+		searchResultHeader.setTypeface(font);
+		TextView friendsHeader = (TextView) resView.findViewById(R.id.friendsHeader);
+		friendsHeader.setTypeface(font);
 
 		activity.getFriendsController().doChangeState(Constants.STATE_FRIENDS, null);
 
@@ -105,35 +122,59 @@ public class FriendsFragment extends Fragment implements FriendsStateChangeListe
 		// If user start searching for friends..
 		if(currentState.equals(Constants.STATE_FRIENDS) && state.equals(Constants.STATE_FRIENDS_SEARCHING)) {
 			friendSearch.setEnabled(false);
-			friendSearchContainer.removeAllViews();
+
+			// If user had already searched before, remove the previous search result.
+			if(searchResultContainer.getChildAt(2) != null)
+				searchResultContainer.removeViewAt(2);
 		}
 
 		// If search ok, display the search result..
 		if(currentState.equals(Constants.STATE_FRIENDS_SEARCHING) &&
 				(state.equals(Constants.STATE_FRIENDS_SEARCH_OK) || state.equals(Constants.STATE_FRIENDS_SEARCH_FAIL))) {
+			View v;
 			LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View container = inflater.inflate(R.layout.friend_search_container, null, false);
-			TextView friendSearchResult = (TextView) container.findViewById(R.id.friendSearchResult);
-			friendSearchResult.setTypeface(font);
-			View row;
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+					(int)(50 * activity.getDensity()));
 			if(displayName != null) {
-				row = inflater.inflate(R.layout.friend_row, null, false);
-				TextView friendDisplayName = (TextView) row.findViewById(R.id.row_txt_display_name);
-				friendDisplayName.setTypeface(font);
-				friendDisplayName.setText(displayName);
+				v = inflater.inflate(R.layout.row_search_result, null, false);
+				v.setLayoutParams(layoutParams);
+				TextView rowDisplayName = (TextView) v.findViewById(R.id.row_display_name);
+				rowDisplayName.setTypeface(font);
+				rowDisplayName.setText(displayName);
+				rowAdd = (ButtonFloatSmall) v.findViewById(R.id.row_friend_status_add);
+				rowAdd.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						activity.getFriendsController().onAddFriend();
+					}
+				});
 			} else {
-				row = inflater.inflate(R.layout.friend_row_null, null, false);
-				TextView friendDisplayName = (TextView) row.findViewById(R.id.row_txt_display_name);
-				friendDisplayName.setTypeface(font);
-				friendDisplayName.setText("No Result Found!");
+				v = inflater.inflate(R.layout.friend_row_null, null, false);
+				v.setLayoutParams(layoutParams);
+				TextView rowErrorCode = (TextView) v.findViewById(R.id.row_error_code);
+				rowErrorCode.setTypeface(font);
+				rowErrorCode.setText("No Result Found!");
 			}
 
-			friendSearchContainer.setVisibility(View.VISIBLE);
-			friendSearchContainer.addView(container);
-			friendSearchContainer.addView(row);
+			searchResultContainer.setVisibility(View.VISIBLE);
+			searchResultContainer.addView(v);
 			friendSearch.setEnabled(true);
 
 			activity.getFriendsController().doChangeState(Constants.STATE_FRIENDS, null);
+		}
+
+		// If user add a friend..
+		if(currentState.equals(Constants.STATE_FRIENDS) && state.equals(Constants.STATE_FRIENDS_ADDING))
+			rowAdd.setEnabled(false);
+
+		// If successfully added a friend..
+		if(currentState.equals(Constants.STATE_FRIENDS_ADDING) && state.equals(Constants.STATE_FRIENDS_ADD_OK)) {
+			// Remove the search result.
+			searchResultContainer.removeViewAt(2);
+			searchResultContainer.setVisibility(View.GONE);
+
+			// Refresh the friends list
+			activity.getFriendsController().onFriendList();
 		}
 
 		activity.getFriendsController().setCurrentState(state);

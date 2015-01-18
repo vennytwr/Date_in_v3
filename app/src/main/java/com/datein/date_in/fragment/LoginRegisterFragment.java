@@ -19,7 +19,8 @@ import com.datein.date_in.R;
 import com.datein.date_in.controller.StateChangeListener;
 import com.datein.date_in.log.Logger;
 import com.datein.date_in.views.material_edit_text.MaterialEditText;
-import com.datein.date_in.views.material_progress_bar_circular.ProgressBarCircularIndetermininate;
+
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
 public class LoginRegisterFragment extends Fragment implements StateChangeListener {
 
@@ -38,7 +39,7 @@ public class LoginRegisterFragment extends Fragment implements StateChangeListen
 	private View loginView;
 	private MaterialEditText loginEmail;
 	private MaterialEditText loginPassword;
-	private ProgressBarCircularIndetermininate loginProgressBar;
+	private ProgressBarCircularIndeterminate loginProgressBar;
 	private ImageView loginClick;
 	private TextView loginRegister;
 
@@ -48,7 +49,7 @@ public class LoginRegisterFragment extends Fragment implements StateChangeListen
 	private MaterialEditText registerEmail;
 	private MaterialEditText registerPassword;
 	private MaterialEditText registerConfirmPassword;
-	private ProgressBarCircularIndetermininate registerProgressBar;
+	private ProgressBarCircularIndeterminate registerProgressBar;
 	private ImageView registerClick;
 	private TextView registerLogin;
 
@@ -98,7 +99,7 @@ public class LoginRegisterFragment extends Fragment implements StateChangeListen
 		loginPassword = (MaterialEditText) resView.findViewById(R.id.login_password);
 		loginPassword.setAccentTypeface(font);
 		loginPassword.setTypeface(font);
-		loginProgressBar = (ProgressBarCircularIndetermininate) resView.findViewById(R.id.loginProgressBar);
+		loginProgressBar = (ProgressBarCircularIndeterminate) resView.findViewById(R.id.loginProgressBar);
 
 		loginClick = (ImageView) resView.findViewById(R.id.loginClick);
 		loginClick.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +141,7 @@ public class LoginRegisterFragment extends Fragment implements StateChangeListen
 		registerConfirmPassword = (MaterialEditText) resView.findViewById(R.id.register_confirm_password);
 		registerConfirmPassword.setAccentTypeface(font);
 		registerConfirmPassword.setTypeface(font);
-		registerProgressBar = (ProgressBarCircularIndetermininate) resView.findViewById(R.id.registerProgressBar);
+		registerProgressBar = (ProgressBarCircularIndeterminate) resView.findViewById(R.id.registerProgressBar);
 
 		registerClick = (ImageView) resView.findViewById(R.id.registerClick);
 		registerClick.setOnClickListener(new View.OnClickListener() {

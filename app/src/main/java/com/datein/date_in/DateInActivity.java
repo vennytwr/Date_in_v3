@@ -35,6 +35,7 @@ public class DateInActivity extends FragmentActivity {
 	private String regId;
 	private int appVersion;
 	private GoogleCloudMessaging gcm;
+	private float density;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class DateInActivity extends FragmentActivity {
 			Logger.d(TAG, "No valid Google Play Services APK found.");
 		}
 
+		density = getResources().getDisplayMetrics().density;
 		loginRegisterController = new LoginRegisterController(this);
 		mainController = new MainController(this);
 		friendsController = new FriendsController(this);
@@ -92,6 +94,10 @@ public class DateInActivity extends FragmentActivity {
 					}
 				})
 				.show();
+	}
+
+	public float getDensity() {
+		return density;
 	}
 
 	public LoginRegisterController getLoginRegisterController() {
