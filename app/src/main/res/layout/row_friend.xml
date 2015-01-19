@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                tools:context=".DateInActivity">
+
+	<TextView
+		android:id="@+id/row_display_name"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_marginStart="20dp"
+		android:gravity="center"
+		android:layout_alignParentStart="true"
+		android:textSize="15sp"/>
+
+	<RelativeLayout
+		android:id="@+id/acceptOrReject"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:layout_centerVertical="true"
+			android:id="@+id/row_friend_reject"
+			android:layout_marginEnd="20dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:background="@color/background_red"
+			materialdesign:iconDrawable="@drawable/ic_action_cancel_light"/>
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:id="@+id/row_friend_accept"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/background_green"
+			materialdesign:iconDrawable="@drawable/ic_action_accept"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_reject"/>
+
+		</RelativeLayout>
+
+</RelativeLayout>

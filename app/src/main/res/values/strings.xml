@@ -1,0 +1,29 @@
+<resources>
+	<string name="app_name">Date-In</string>
+
+	<!-- Login / Register -->
+	<string name="txt_title_login">LOGIN</string>
+	<string name="txt_title_register">REGISTER</string>
+	<string name="txt_display_name">Display Name</string>
+	<string name="txt_email">Email Address</string>
+	<string name="txt_password">Password</string>
+	<string name="txt_password_confirm">Confirm Password</string>
+	<string name="txt_register_here"><u>Don\'t have an account? Register here!</u></string>
+	<string name="txt_login_here"><u>Already have an account? Login here!</u></string>
+
+	// Calendar
+	<string name="title_section1">Calendar</string>
+
+	// Friends
+	<string name="title_section2">Friends</string>
+	<string name="txt_search">Search for friends</string>
+	<string name="txt_SearchResultHeader">Search Result</string>
+	<string name="txt_display_name_row">Display Name : </string>
+	<string name="txt_requestsHeader">Requests</string>
+	<string name="txt_friendsHeader">Friends</string>
+	<string name="txt_emptyFriend">No Friends, search for your friends by entering their display name. :)</string>
+	<string name="txt_friend_status_requesting">Requested</string>
+
+	// Events
+	<string name="title_section3">Events</string>
+</resources>
