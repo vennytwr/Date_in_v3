@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<color name="background_light_blue">#03A9F4</color>
 	<color name="background_blue">#2196F3</color>
 	<color name="background_green">#4CAF50</color>
 	<color name="background_white">#FFFFFF</color>
 	<color name="background_red">#F44336</color>
+	<color name="background_orange">#FF9800</color>
 
 	<!-- Login Color -->
 	<color name="basicColor">#2196F3</color>
+
+	// Calendar
+	<color name="calendarCellPrevious">#FFFFFFFF</color>
+	<color name="calendarCellCurrent">#03A9F4</color>
+	<color name="calendarCellNext">#FFFFFFFF</color>
+	<color name="calendarCellSelected">#01579B</color>
 
 </resources>

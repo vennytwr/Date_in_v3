@@ -47,9 +47,9 @@ public class MaterialTabHost extends HorizontalScrollView {
 		//Resources.Theme theme = context.getTheme();
 		//TypedValue typedValue = new TypedValue();
 		//theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-		primaryColor = getResources().getColor(android.R.color.holo_blue_light);
+		primaryColor = getResources().getColor(android.R.color.holo_blue_dark);
 		//theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
-		accentColor = getResources().getColor(R.color.background_blue);
+		accentColor = getResources().getColor(android.R.color.holo_blue_light);
 		iconColor = Color.WHITE;
 		textColor = Color.WHITE;
 
@@ -215,6 +215,6 @@ public class MaterialTabHost extends HorizontalScrollView {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		// Setting measured width + 48 dp height
-		setMeasuredDimension(getMeasuredWidth(), (int) (48 * density));
+		setMeasuredDimension(getMeasuredWidth(), (int) (55 * density));
 	}
 }

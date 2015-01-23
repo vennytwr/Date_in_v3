@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".DateInActivity">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/actionBarHeight"
+		android:background="@android:color/holo_blue_dark">
+
+	<ImageView
+		android:id="@+id/createEventBack"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_alignParentStart="true"
+		android:paddingEnd="20dp"
+		android:paddingStart="20dp"
+		android:src="@drawable/ic_action_back"/>
+
+	<TextView
+		android:id="@+id/createEventHeader"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_centerHorizontal="true"
+		android:layout_marginStart="20dp"
+		android:gravity="center"
+		android:text="@string/txt_create_event_header"
+		android:textColor="@android:color/white"
+		android:textSize="20sp"/>
+
+		<ImageView
+			android:id="@+id/createEventGetCommonTime"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:paddingEnd="20dp"
+			android:paddingStart="20dp"
+			android:src="@drawable/ic_action_forward"/>
+
+		<ImageView
+			android:visibility="gone"
+			android:id="@+id/createEventBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:paddingEnd="20dp"
+			android:paddingStart="20dp"
+			android:src="@drawable/ic_action_accept"/>
+
+	</RelativeLayout>
+
+	<ScrollView
+		android:id="@+id/createEventShowOptions"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="none"
+		android:overScrollMode="never"
+		android:fillViewport="true">
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="0dp">
+
+			<com.datein.date_in.views.material_edit_text.MaterialEditText
+				android:id="@+id/createEventName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="10dp"
+				android:layout_marginStart="10dp"
+				android:layout_marginTop="10dp"
+				android:hint="@string/txt_create_event_name"
+				android:paddingEnd="10dp"
+				android:paddingStart="10dp"
+				android:textSize="15sp"
+				android:inputType="text"
+				app:baseColor="@color/basicColor"
+				app:floatingLabel="highlight"
+				app:primaryColor="?attr/colorPrimary"
+				app:singleLineEllipsis="true"/>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="30dp">
+
+				<TextView
+					android:id="@+id/friendsHeader"
+					android:layout_centerVertical="true"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="25dp"
+					android:textSize="18sp"
+					android:text="@string/txt_create_event_add_friend"/>
+
+			</RelativeLayout>
+
+			<View
+				android:layout_marginStart="15dp"
+				android:layout_marginEnd="15dp"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+				android:orientation="vertical"
+				android:id="@+id/createEventFriends"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+
+			</LinearLayout>
+
+
+		</ScrollView>
+
+	<LinearLayout
+		android:visibility="gone"
+		android:id="@+id/createEventShowCalendar"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/calendarHeader"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="15dp"
+			android:textSize="25sp"/>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/calendarSubHeader1"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header1"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader2"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header2"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader3"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header3"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader4"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header4"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader5"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header5"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader6"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header6"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:id="@+id/calendarSubHeader7"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/txt_calendar_sub_header7"
+				android:textSize="15sp"/>
+
+		</LinearLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:layout_margin="5dp"
+			android:background="@color/background_light_blue"/>
+
+		<android.support.v4.view.ViewPager
+			android:id="@+id/editCalendarViewPager"
+			android:layout_width="match_parent"
+			android:layout_height="360dp"/>
+
+		</LinearLayout>
+
+</LinearLayout>

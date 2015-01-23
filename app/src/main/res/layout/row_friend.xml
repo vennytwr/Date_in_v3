@@ -18,9 +18,30 @@
 		android:textSize="15sp"/>
 
 	<RelativeLayout
-		android:id="@+id/acceptOrReject"
+		android:visibility="gone"
+		android:id="@+id/row_friend_request_container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/row_friend_accept_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="5dp"
+			android:layout_toStartOf="@+id/row_friend_accept"
+			android:text="@string/txt_accept"/>
+
+		<TextView
+			android:id="@+id/row_friend_reject_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_marginEnd="5dp"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_reject"
+			android:text="@string/txt_reject"/>
 
 		<com.gc.materialdesign.views.ButtonFloatSmall
 			android:layout_centerVertical="true"
@@ -35,12 +56,142 @@
 		<com.gc.materialdesign.views.ButtonFloatSmall
 			android:id="@+id/row_friend_accept"
 			android:layout_width="wrap_content"
+			android:layout_marginEnd="3dp"
 			android:layout_height="wrap_content"
 			android:background="@color/background_green"
 			materialdesign:iconDrawable="@drawable/ic_action_accept"
 			android:layout_centerVertical="true"
-			android:layout_toStartOf="@+id/row_friend_reject"/>
+			android:layout_toStartOf="@+id/row_friend_reject_txt"/>
 
 		</RelativeLayout>
+
+	<RelativeLayout
+		android:visibility="gone"
+		android:id="@+id/row_friend_add_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/row_friend_add_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_marginEnd="5dp"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_add"
+			android:text="@string/txt_add_friend"/>
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:layout_centerVertical="true"
+			android:id="@+id/row_friend_add"
+			android:layout_marginEnd="20dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:background="@color/background_blue"
+			materialdesign:iconDrawable="@drawable/ic_action_new"/>
+
+		</RelativeLayout>
+
+	<RelativeLayout
+		android:visibility="gone"
+		android:id="@+id/row_friend_pending_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/row_friend_pending_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_marginEnd="5dp"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_pending"
+			android:text="@string/txt_pending"/>
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:layout_centerVertical="true"
+			android:id="@+id/row_friend_pending"
+			android:layout_marginEnd="20dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:background="@color/background_floating_material_dark"
+			materialdesign:iconDrawable="@drawable/ic_action_pending"/>
+
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:visibility="gone"
+		android:id="@+id/row_friend_added_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/row_friend_added_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_marginEnd="5dp"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_added"
+			android:text="@string/txt_accepted"/>
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:id="@+id/row_friend_added"
+			android:layout_width="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_marginEnd="20dp"
+			android:layout_height="wrap_content"
+			android:background="@color/background_green"
+			materialdesign:iconDrawable="@drawable/ic_action_accept"
+			android:layout_centerVertical="true"/>
+
+		</RelativeLayout>
+
+	<RelativeLayout
+		android:visibility="gone"
+		android:id="@+id/row_friend_ignore_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/row_friend_undo_ignore_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:layout_marginEnd="5dp"
+			android:layout_centerVertical="true"
+			android:layout_toStartOf="@+id/row_friend_undo_ignore"
+			android:text="@string/txt_undo"/>
+
+		<com.gc.materialdesign.views.ButtonFloatSmall
+			android:id="@+id/row_friend_undo_ignore"
+			android:layout_width="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_marginEnd="20dp"
+			android:layout_height="wrap_content"
+			android:background="@color/background_orange"
+			materialdesign:iconDrawable="@drawable/ic_action_undo"
+			android:layout_centerVertical="true"/>
+
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:visibility="gone"
+		android:id="@+id/row_friend_loading"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+			android:id="@+id/registerProgressBar"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_marginEnd="20dp"
+			android:layout_centerVertical="true"
+			android:layout_alignParentEnd="true"
+			android:background="@color/background_blue"/>
+
+	</RelativeLayout>
 
 </RelativeLayout>

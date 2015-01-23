@@ -11,19 +11,19 @@ import android.support.v4.app.NotificationCompat;
 import com.datein.date_in.Constants;
 import com.datein.date_in.DateInActivity;
 import com.datein.date_in.R;
-import com.datein.date_in.controller.FriendsController;
-import com.datein.date_in.controller.LoginRegisterController;
-import com.datein.date_in.controller.MainController;
+import com.datein.date_in.calendar.CalendarController;
+import com.datein.date_in.events.CreateEventController;
+import com.datein.date_in.friends.FriendsController;
+import com.datein.date_in.login_register.LoginRegisterController;
+import com.datein.date_in.log.Logger;
+import com.datein.date_in.main.MainController;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
 
 	private static final String TAG = "GcmIntentService";
 
-	private static final String ACTION_NOTIFICATION = "ACTION_NOTIFICATION";
-	private static final String KEY_MESSAGE_TXT = "KEY_MESSAGE_TXT";
-
-	private static final int NOTIFICATION_ID = 1;
+	private int NOTIFICATION_ID = 1;
 
 	public GcmIntentService() {
 		super("GcmIntentService");
@@ -37,9 +37,9 @@ public class GcmIntentService extends IntentService {
 
 		if (!extras.isEmpty()) {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType))
-				sendNotification("Send error: " + extras.toString());
+				Logger.d(TAG, "Send error: " + extras.toString());
 			else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType))
-				sendNotification("Deleted messages on server: " + extras.toString());
+				Logger.d(TAG, "Deleted messages on server: " + extras.toString());
 				// If it's a regular GCM message, do some work.
 			else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 				String action = intent.getStringExtra("action");
@@ -64,53 +64,111 @@ public class GcmIntentService extends IntentService {
 						LoginRegisterController.getInstance().doChangeState(Constants.STATE_DISPLAY_NAME_TAKEN);
 						LoginRegisterController.getInstance().doChangeState(Constants.STATE_REGISTER);
 						break;
-					case Constants.ACTION_SEARCH_OK:
+					case Constants.ACTION_FRIEND_SEARCH_OK:
 						FriendsController.getInstance().onSearchOK(extras);
 						break;
-					case Constants.ACTION_SEARCH_FAIL:
-						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_SEARCH_FAIL, null);
+					case Constants.ACTION_FRIEND_SEARCH_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_SEARCH_FAIL);
 						break;
-					case Constants.ACTION_ADD_OK:
-						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_OK, null);
+					case Constants.ACTION_FRIEND_ADD_OK:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_OK);
 						break;
-					case Constants.ACTION_ADD_FAIL:
-						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_FAIL, null);
+					case Constants.ACTION_FRIEND_ADD_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ADD_FAIL);
 						break;
-					case Constants.ACTION_LIST_OK:
+					case Constants.ACTION_FRIEND_OK:
 						FriendsController.getInstance().onFriendListOK(extras);
 						break;
-					case Constants.ACTION_LIST_FAIL:
-						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_LIST_FAIL, null);
-
-
+					case Constants.ACTION_FRIEND_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_LIST_FAIL);
+						break;
+					case Constants.ACTION_FRIEND_ACCEPT_OK:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ACCEPT_OK);
+						break;
+					case Constants.ACTION_FRIEND_ACCEPT_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_ACCEPT_FAIL);
+						break;
+					case Constants.ACTION_FRIEND_REJECT_OK:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_REJECT_OK);
+						break;
+					case Constants.ACTION_FRIEND_REJECT_FAIL:
+						FriendsController.getInstance().doChangeState(Constants.STATE_FRIENDS_REJECT_FAIL);
+						break;
+					case Constants.ACTION_FRIEND_REQUEST:
+						String requestFrom = extras.getString("requestFrom");
+						sendNotificationRequest(requestFrom + " had sent you a friend request.");
+						if(FriendsController.getInstance() != null)
+							FriendsController.getInstance().onFriendList();
+						break;
+					case Constants.ACTION_FRIEND_ACCEPTED:
+						String acceptTo = extras.getString("acceptTo");
+						sendNotificationAccepted(acceptTo + " had accepted your friend request.");
+						if(FriendsController.getInstance() != null)
+							FriendsController.getInstance().onFriendList();
+						break;
+					case Constants.ACTION_EDIT_CALENDAR_SYNC_OK:
+						CalendarController.getInstance().doChangeState(Constants.STATE_EDIT_CALENDAR_SYNC_OK);
+						break;
+					case Constants.ACTION_EDIT_CALENDAR_SYNC_FAIL:
+						CalendarController.getInstance().doChangeState(Constants.STATE_EDIT_CALENDAR_SYNC_FAIL);
+						break;
+					case Constants.ACTION_CALENDAR_OK:
+						CalendarController.getInstance().onCalendarOK(extras);
+						break;
+					case Constants.ACTION_CALENDAR_FAIL:
+						CalendarController.getInstance().doChangeState(Constants.STATE_CALENDAR_FAIL);
+						break;
+					case Constants.ACTION_EVENT_REQUEST_OK:
+						CreateEventController.getInstance().onRequestCommonTimeOK(extras);
+						break;
+					case Constants.ACTION_EVENT_REQUEST_FAIL:
+						CalendarController.getInstance().doChangeState(Constants.STATE_EVENTS_REQUEST_COMMON_TIME_FAIL);
+						break;
 				}
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 
-	// Put the message into a notification and post it.
-	// This is just one simple example of what you might choose to do with
-	// a GCM message.
-	private void sendNotification(String msg) {
+	private void sendNotificationRequest(String msg) {
 		NotificationManager mNotificationManager = (NotificationManager) this
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		Intent notificationIntent = new Intent(this, DateInActivity.class);
-		notificationIntent.setAction(ACTION_NOTIFICATION);
-		notificationIntent.putExtra(KEY_MESSAGE_TXT, msg);
-		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		notificationIntent.setAction(Constants.ACTION_NOTIFICATION_REQUEST);
+		notificationIntent.putExtra(Constants.KEY_MESSAGE_TXT, msg);
+		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				notificationIntent, 0);
+				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-				.setSmallIcon(R.drawable.ic_action_forward)
-				.setContentTitle("GCM Notification")
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle("You have a new friend request.")
 				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
 				.setContentText(msg);
 
-		mBuilder.setContentIntent(contentIntent);
-		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+		mBuilder.setContentIntent(contentIntent).setAutoCancel(true).setTicker(msg);
+		mNotificationManager.notify(NOTIFICATION_ID++, mBuilder.build());
+	}
+
+	private void sendNotificationAccepted(String msg) {
+		NotificationManager mNotificationManager = (NotificationManager) this
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+
+		Intent notificationIntent = new Intent(this, DateInActivity.class);
+		notificationIntent.setAction(Constants.ACTION_NOTIFICATION_REQUEST);
+		notificationIntent.putExtra(Constants.KEY_MESSAGE_TXT, msg);
+		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle("Your request have been accepted")
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+				.setContentText(msg);
+
+		mBuilder.setContentIntent(contentIntent).setAutoCancel(true).setTicker(msg);
+		mNotificationManager.notify(NOTIFICATION_ID++, mBuilder.build());
 	}
 }

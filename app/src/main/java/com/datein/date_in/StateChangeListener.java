@@ -1,4 +1,4 @@
-package com.datein.date_in.controller;
+package com.datein.date_in;
 
 public interface StateChangeListener {
 	public void onStateChanged(String state);

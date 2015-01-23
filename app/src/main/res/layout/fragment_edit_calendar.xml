@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@android:color/white"
+              android:layout_height="match_parent"
+              tools:context=".DateInActivity">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/actionBarHeight"
+		android:background="@android:color/holo_blue_dark">
+
+		<ImageView
+			android:id="@+id/editCalendarBack"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentStart="true"
+			android:paddingEnd="20dp"
+			android:paddingStart="20dp"
+			android:src="@drawable/ic_action_back"/>
+
+		<TextView
+			android:id="@+id/editCalendarHeader"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_marginStart="20dp"
+			android:gravity="center"
+			android:text="@string/txt_title_edit_calendar"
+			android:textColor="@android:color/white"
+			android:textSize="20sp"/>
+
+		<ImageView
+			android:id="@+id/editCalendarSync"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:paddingEnd="20dp"
+			android:paddingStart="20dp"
+			android:src="@drawable/ic_action_accept"/>
+
+		<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+			android:id="@+id/loginProgressBar"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_marginEnd="20dp"
+			android:layout_centerVertical="true"
+			android:layout_alignParentEnd="true"
+			android:background="@android:color/white"
+			android:visibility="gone"/>
+
+	</RelativeLayout>
+
+	<TextView
+		android:id="@+id/calendarHeader"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="15dp"
+		android:textSize="25sp"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/calendarSubHeader1"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header1"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader2"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header2"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader3"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header3"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader4"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header4"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader5"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header5"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader6"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header6"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/calendarSubHeader7"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="@string/txt_calendar_sub_header7"
+			android:textSize="15sp"/>
+
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:layout_margin="5dp"
+		android:background="@color/background_light_blue"/>
+
+	<android.support.v4.view.ViewPager
+		android:id="@+id/editCalendarViewPager"
+		android:layout_width="match_parent"
+		android:layout_height="360dp"/>
+
+</LinearLayout>

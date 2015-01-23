@@ -1,6 +1,9 @@
 <resources>
 	<string name="app_name">Date-In</string>
 
+	<!-- Drawer -->
+	<string name="txt_drawer_edit">Edit Calender</string>
+
 	<!-- Login / Register -->
 	<string name="txt_title_login">LOGIN</string>
 	<string name="txt_title_register">REGISTER</string>
@@ -11,19 +14,38 @@
 	<string name="txt_register_here"><u>Don\'t have an account? Register here!</u></string>
 	<string name="txt_login_here"><u>Already have an account? Login here!</u></string>
 
-	// Calendar
+	<!-- Calendar -->
+	<string name="txt_calendar_sub_header1">SUN</string>
+	<string name="txt_calendar_sub_header2">MON</string>
+	<string name="txt_calendar_sub_header3">TUE</string>
+	<string name="txt_calendar_sub_header4">WED</string>
+	<string name="txt_calendar_sub_header5">THU</string>
+	<string name="txt_calendar_sub_header6">FRI</string>
+	<string name="txt_calendar_sub_header7">SAT</string>
 	<string name="title_section1">Calendar</string>
+	<string name="txt_title_edit_calendar">Editing Calendar</string>
+	<string name="txt_loading_calendar">Loading calendar..</string>
 
 	// Friends
 	<string name="title_section2">Friends</string>
 	<string name="txt_search">Search for friends</string>
+	<string name="txt_accept">Accept</string>
+	<string name="txt_reject">Reject</string>
+	<string name="txt_add_friend">Add Friend</string>
+	<string name="txt_pending">Pending</string>
+	<string name="txt_accepted">Accepted</string>
+	<string name="txt_undo">Undo Ignore</string>
 	<string name="txt_SearchResultHeader">Search Result</string>
 	<string name="txt_display_name_row">Display Name : </string>
 	<string name="txt_requestsHeader">Requests</string>
 	<string name="txt_friendsHeader">Friends</string>
 	<string name="txt_emptyFriend">No Friends, search for your friends by entering their display name. :)</string>
 	<string name="txt_friend_status_requesting">Requested</string>
+	<string name="txt_loading_friends">Loading friends..</string>
 
 	// Events
 	<string name="title_section3">Events</string>
+	<string name="txt_create_event_name">Event Name</string>
+	<string name="txt_create_event_header">Create Event</string>
+	<string name="txt_create_event_add_friend">Select the friend(s) you want to add</string>
 </resources>

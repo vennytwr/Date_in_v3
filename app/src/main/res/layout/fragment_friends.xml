@@ -9,6 +9,28 @@
               android:orientation="vertical"
               tools:context=".DateInActivity">
 
+	<RelativeLayout
+		android:id="@+id/loadingContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:id="@+id/txtFriendsLoading"
+			android:text="@string/txt_loading_friends"
+			android:layout_centerInParent="true"
+			android:layout_width="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_height="wrap_content"/>
+
+		<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_centerInParent="true"
+			android:layout_toStartOf="@id/txtFriendsLoading"
+			android:background="@color/background_blue"/>
+
+		</RelativeLayout>
+
 	<com.datein.date_in.views.material_edit_text.MaterialEditText
 		android:id="@+id/friendSearch"
 		android:layout_width="match_parent"
@@ -65,10 +87,9 @@
 						android:id="@+id/searchResultContainerClose"
 						android:layout_width="wrap_content"
 						android:layout_marginEnd="25dp"
-						materialdesign:rippleColor="@color/background_white"
 						android:layout_alignParentEnd="true"
-						materialdesign:iconDrawable="@drawable/ic_action_cancel"
 						android:layout_height="wrap_content"
+						android:background="@color/background_white"
 						app:iconDrawable="@drawable/ic_action_cancel_dark"/>
 
 

@@ -1,4 +1,4 @@
-package com.datein.date_in.fragment;
+package com.datein.date_in.login_register;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.datein.date_in.Constants;
 import com.datein.date_in.DateInActivity;
 import com.datein.date_in.R;
-import com.datein.date_in.controller.StateChangeListener;
+import com.datein.date_in.StateChangeListener;
 import com.datein.date_in.log.Logger;
 import com.datein.date_in.views.material_edit_text.MaterialEditText;
 

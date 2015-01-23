@@ -1,5 +1,6 @@
-package com.datein.date_in.fragment;
+package com.datein.date_in.main;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,17 +11,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.datein.date_in.Constants;
 import com.datein.date_in.DateInActivity;
 import com.datein.date_in.R;
-import com.datein.date_in.controller.StateChangeListener;
+import com.datein.date_in.StateChangeListener;
+import com.datein.date_in.calendar.CalendarFragment;
+import com.datein.date_in.events.EventsFragment;
+import com.datein.date_in.friends.FriendsFragment;
 import com.datein.date_in.log.Logger;
 import com.datein.date_in.views.material_drawer.DrawerArrowDrawable;
 import com.datein.date_in.views.material_tab.MaterialTab;
 import com.datein.date_in.views.material_tab.MaterialTabHost;
 import com.datein.date_in.views.material_tab.MaterialTabListener;
 import com.datein.date_in.views.material_tab.NoSwipeViewPager;
+import com.gc.materialdesign.views.ButtonFloat;
+import com.gc.materialdesign.views.ButtonFloatSmall;
 
 import java.util.Locale;
 
@@ -37,6 +46,7 @@ public class MainFragment extends Fragment implements StateChangeListener, Mater
 	private DrawerLayout drawer;
 	private float offset;
 	private boolean flipped;
+	private Typeface font;
 
 	private MaterialTabHost tabHost;
 	private NoSwipeViewPager pager;
@@ -46,6 +56,9 @@ public class MainFragment extends Fragment implements StateChangeListener, Mater
 		View resView = inflater.inflate(R.layout.fragment_main, container, false);
 
 		activity = (DateInActivity) getActivity();
+
+		// Set font style.
+		font = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
 
 		drawer = (DrawerLayout) resView.findViewById(R.id.drawer_layout);
 		drawer.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -81,6 +94,16 @@ public class MainFragment extends Fragment implements StateChangeListener, Mater
 			}
 		});
 
+		TextView drawerEditCalendarText = (TextView) resView.findViewById(R.id.drawer_edit_calendar_txt);
+		drawerEditCalendarText.setTypeface(font);
+		ButtonFloatSmall drawerEditCalendarBtn = (ButtonFloatSmall) resView.findViewById(R.id.drawer_edit_calendar_btn);
+		drawerEditCalendarBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				activity.openEditCalendar();
+			}
+		});
+
 		tabHost = (MaterialTabHost) resView.findViewById(R.id.tabHost);
 		pager = (NoSwipeViewPager) resView.findViewById(R.id.pager);
 
@@ -109,8 +132,6 @@ public class MainFragment extends Fragment implements StateChangeListener, Mater
 			tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
 		}
 
-		// Change the state to STATE_MAIN.
-		activity.getMainController().doChangeState(Constants.STATE_MAIN);
 		return  resView;
 	}
 
@@ -152,9 +173,9 @@ public class MainFragment extends Fragment implements StateChangeListener, Mater
 			return;
 		}
 
-		// If everything is loaded, change state to calendar
-		if(currentState.equals(Constants.STATE_START) && state.equals(Constants.STATE_MAIN))
-			activity.getMainController().doChangeState(Constants.STATE_CALENDAR);
+		if(state.equals(Constants.STATE_MAIN_DRAWER_OPEN)) {
+			drawer.closeDrawer(START);
+		}
 
 		activity.getMainController().setCurrentState(state);
 	}

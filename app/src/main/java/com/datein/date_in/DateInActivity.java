@@ -3,6 +3,7 @@ package com.datein.date_in;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,12 +14,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.datein.date_in.controller.FriendsController;
-import com.datein.date_in.controller.MainController;
-import com.datein.date_in.fragment.LoginRegisterFragment;
-import com.datein.date_in.fragment.MainFragment;
+import com.datein.date_in.calendar.CalendarBuilder;
+import com.datein.date_in.calendar.CalendarController;
+import com.datein.date_in.calendar.EditCalendarFragment;
+import com.datein.date_in.events.CreateEventController;
+import com.datein.date_in.events.CreateEventFragment;
+import com.datein.date_in.friends.FriendsController;
 import com.datein.date_in.log.Logger;
-import com.datein.date_in.controller.LoginRegisterController;
+import com.datein.date_in.login_register.LoginRegisterController;
+import com.datein.date_in.login_register.LoginRegisterFragment;
+import com.datein.date_in.main.MainController;
+import com.datein.date_in.main.MainFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -32,6 +38,9 @@ public class DateInActivity extends FragmentActivity {
 	private LoginRegisterController loginRegisterController;
 	private MainController mainController;
 	private FriendsController friendsController;
+	private CalendarController calendarController;
+	private CreateEventController createEventController;
+	private CalendarBuilder calendarBuilder;
 	private String regId;
 	private int appVersion;
 	private GoogleCloudMessaging gcm;
@@ -54,9 +63,12 @@ public class DateInActivity extends FragmentActivity {
 		}
 
 		density = getResources().getDisplayMetrics().density;
+		calendarBuilder = new CalendarBuilder(this);
 		loginRegisterController = new LoginRegisterController(this);
 		mainController = new MainController(this);
 		friendsController = new FriendsController(this);
+		calendarController = new CalendarController(this);
+		createEventController = new CreateEventController(this);
 
 		setContentView(R.layout.activity_main);
 
@@ -76,8 +88,13 @@ public class DateInActivity extends FragmentActivity {
 	}
 
 	@Override
+	protected void onNewIntent(Intent intent) {
+
+	}
+
+	@Override
 	public void onBackPressed() {
-		if (loginRegisterController.getCurrentState() == Constants.STATE_REGISTER) {
+		if (loginRegisterController.getCurrentState().equals(Constants.STATE_REGISTER)) {
 			loginRegisterController.doChangeState(Constants.STATE_LOGIN);
 			return;
 		}
@@ -112,8 +129,20 @@ public class DateInActivity extends FragmentActivity {
 		return friendsController;
 	}
 
+	public CalendarController getCalendarController() {
+		return calendarController;
+	}
+
+	public CreateEventController getCreateEventController() {
+		return createEventController;
+	}
+
 	public GoogleCloudMessaging getGcm() {
 		return gcm;
+	}
+
+	public CalendarBuilder getCalendarBuilder() {
+		return calendarBuilder;
 	}
 
 	public void doInitApp(boolean firstAttempt) {
@@ -123,6 +152,36 @@ public class DateInActivity extends FragmentActivity {
 		} else {
 			transaction.replace(R.id.fragmentContainer, new MainFragment(), "mainFragment");
 		}
+		transaction.commit();
+	}
+
+	public void openEditCalendar() {
+		getMainController().doChangeState(Constants.STATE_MAIN_DRAWER_OPEN);
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_fade_out);
+		transaction.replace(R.id.fragmentContainer, new EditCalendarFragment(), "editCalendarFragment");
+		transaction.commit();
+	}
+
+	public void closeEditCalendar() {
+		getMainController().doChangeState(Constants.STATE_MAIN_DRAWER_CLOSE);
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
+		transaction.replace(R.id.fragmentContainer, new MainFragment(), "mainFragment");
+		transaction.commit();
+	}
+
+	public void openCreateEvent() {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_fade_out);
+		transaction.replace(R.id.fragmentContainer, new CreateEventFragment(), "createEventFragment");
+		transaction.commit();
+	}
+
+	public void closeCreateEvent() {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
+		transaction.replace(R.id.fragmentContainer, new MainFragment(), "createEventFragment");
 		transaction.commit();
 	}
 
@@ -267,5 +326,4 @@ public class DateInActivity extends FragmentActivity {
 		return getSharedPreferences(DateInActivity.class.getSimpleName(),
 				Context.MODE_PRIVATE);
 	}
-
 }
